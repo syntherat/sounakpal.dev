@@ -1,0 +1,95 @@
+.ribbon-section {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  overflow: hidden;   /* keep this */
+  background: #050816;
+}
+/* generic strip */
+.ribbon-strip {
+  position: absolute;
+
+  /* 🔥 make the band MUCH wider than the viewport */
+  left: -60vw;
+  width: 220vw;
+
+  transform-origin: center;
+}
+/* BACK strip (darker, further away) */
+.ribbon-strip--back {
+  top: 45%;
+  height: 55px;
+  background: linear-gradient(
+    90deg,
+    rgba(37, 82, 220, 0.08),
+    rgba(37, 82, 220, 0.25),
+    rgba(37, 82, 220, 0.08)
+  );
+  transform: rotate(-3deg);
+  filter: blur(1.5px);
+}
+
+/* FRONT strip (bright with text) */
+.ribbon-strip--front {
+  top: 42%;
+  height: 64px;
+  background: linear-gradient(90deg, #5800cc, rgb(95, 0, 219));
+  transform: rotate(5deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* soft glow under the front strip */
+.ribbon-strip--front::after {
+  content: "";
+  position: absolute;
+  inset: 55% -10% -30%;
+  pointer-events: none;
+}
+
+/* text row – STATIC (no animation) */
+.ribbon-text-row {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 40px;
+  white-space: nowrap;
+  font-family: "Instrument Serif", serif;
+  font-weight: 600;
+  font-size: 1.2rem;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.ribbon-word {
+  opacity: 0.98;
+}
+
+.ribbon-star {
+  font-size: 1.2rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+}
+
+/* responsive tweak */
+@media (max-width: 768px) {
+  .ribbon-section {
+    height: 140px;
+  }
+
+  .ribbon-strip--back {
+    height: 70px;
+  }
+
+  .ribbon-strip--front {
+    height: 56px;
+  }
+
+  .ribbon-text-row {
+    font-size: 0.78rem;
+    gap: 22px;
+  }
+}
