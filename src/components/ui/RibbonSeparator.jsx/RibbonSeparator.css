@@ -55,7 +55,39 @@
   z-index: 1;
   display: inline-flex;
   align-items: center;
-  gap: 40px;
+  white-space: nowrap;
+  font-family: "Instrument Serif", serif;
+  font-weight: 600;
+  font-size: 1.2rem;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+  text-transform: uppercase;
+    width: 100%;
+  overflow: hidden;
+}
+.ribbon-text-track {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  white-space: nowrap;
+  font-family: "Instrument Serif", serif;
+  font-weight: 600;
+  font-size: 1.2rem;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+  text-transform: uppercase;
+  width: 200%;  
+
+  /* 🔥 infinite scroll */
+  animation: ribbon-marquee 40s linear infinite;
+}
+
+/* one copy of the words list */
+.ribbon-sequence {
+  flex: 0 0 50%;               /* each is half of the track */
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
   white-space: nowrap;
   font-family: "Instrument Serif", serif;
   font-weight: 600;
@@ -71,9 +103,19 @@
 
 .ribbon-star {
   font-size: 1.2rem;
+  margin: 0 10px;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
 }
 
+/* marquee keyframes – move one full “set” width to the left */
+@keyframes ribbon-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
 /* responsive tweak */
 @media (max-width: 768px) {
   .ribbon-section {
