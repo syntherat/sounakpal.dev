@@ -4,16 +4,16 @@ import HomePage from './pages/HomePage';
 import StaggeredMenu from './components/StaggeredMenu/StaggeredMenu';
 
 const menuItems = [
-  { label: 'Home', ariaLabel: 'Go to home section', link: '#home' },
-  { label: 'About', ariaLabel: 'Learn about me', link: '#about' },
-  { label: 'Work', ariaLabel: 'View my work', link: '#work' },
-  { label: 'Contact', ariaLabel: 'Get in touch', link: '#contact' },
+  { label: 'Home', ariaLabel: 'Go to home section', link: '/' },
+  { label: 'About', ariaLabel: 'Learn about me', link: '/about' },
+  { label: 'Work', ariaLabel: 'View my work', link: '/work' },
+  { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' },
 ];
 
 const socialItems = [
-  { label: 'Twitter', link: 'https://twitter.com' },
-  { label: 'GitHub', link: 'https://github.com' },
-  { label: 'LinkedIn', link: 'https://linkedin.com' },
+  { label: 'Instagram', link: 'https://www.instagram.com/sounak.mp4/' },
+  { label: 'GitHub', link: 'https://github.com/syntherat' },
+  { label: 'LinkedIn', link: 'https://linkedin.com/in/sounak-pal/' },
 ];
 
 function App() {
@@ -29,11 +29,11 @@ function App() {
         displaySocials={true}
         displayItemNumbering={true}
         menuButtonColor="#fff"
-        openMenuButtonColor="#fff"
+        openMenuButtonColor="#000000ff"
         changeMenuColorOnOpen={true}
         colors={['#B19EEF', '#5227FF']}
         logoUrl="/path-to-your-logo.svg"
-        accentColor="#ff6b6b"
+        accentColor="#b700ffff"
         isFixed={true}
         visible={menuVisible}      
       />
