@@ -2,20 +2,19 @@
   position: relative;
   width: 100%;
   height: 260px;
-  overflow: hidden;   /* keep this */
+  overflow: hidden;
   background: #050816;
 }
+
 /* generic strip */
 .ribbon-strip {
   position: absolute;
-
-  /* 🔥 make the band MUCH wider than the viewport */
   left: -60vw;
   width: 220vw;
-
   transform-origin: center;
 }
-/* BACK strip (darker, further away) */
+
+/* BACK strip */
 .ribbon-strip--back {
   top: 45%;
   height: 55px;
@@ -29,7 +28,7 @@
   filter: blur(1.5px);
 }
 
-/* FRONT strip (bright with text) */
+/* FRONT strip */
 .ribbon-strip--front {
   top: 42%;
   height: 64px;
@@ -41,7 +40,6 @@
   position: relative;
 }
 
-/* soft glow under the front strip */
 .ribbon-strip--front::after {
   content: "";
   position: absolute;
@@ -49,7 +47,6 @@
   pointer-events: none;
 }
 
-/* text row – STATIC (no animation) */
 .ribbon-text-row {
   position: relative;
   z-index: 1;
@@ -62,9 +59,10 @@
   letter-spacing: 0.1em;
   color: #ffffff;
   text-transform: uppercase;
-    width: 100%;
+  width: 100%;
   overflow: hidden;
 }
+
 .ribbon-text-track {
   display: flex;
   align-items: center;
@@ -76,25 +74,16 @@
   letter-spacing: 0.1em;
   color: #ffffff;
   text-transform: uppercase;
-  width: 200%;  
-
-  /* 🔥 infinite scroll */
+  width: 200%;
   animation: ribbon-marquee 40s linear infinite;
 }
 
-/* one copy of the words list */
 .ribbon-sequence {
-  flex: 0 0 50%;               /* each is half of the track */
+  flex: 0 0 50%;
   display: inline-flex;
   align-items: center;
   gap: 20px;
   white-space: nowrap;
-  font-family: "Instrument Serif", serif;
-  font-weight: 600;
-  font-size: 1.2rem;
-  letter-spacing: 0.1em;
-  color: #ffffff;
-  text-transform: uppercase;
 }
 
 .ribbon-word {
@@ -107,7 +96,6 @@
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
 }
 
-/* marquee keyframes – move one full “set” width to the left */
 @keyframes ribbon-marquee {
   from {
     transform: translateX(0);
@@ -116,22 +104,86 @@
     transform: translateX(-50%);
   }
 }
-/* responsive tweak */
+
+/* =====================
+   RESPONSIVE
+   ===================== */
+
+@media (max-width: 1024px) {
+  .ribbon-section {
+    height: 200px;
+  }
+
+  .ribbon-strip--back {
+    height: 60px;
+  }
+
+  .ribbon-strip--front {
+    height: 58px;
+    transform: rotate(4deg);
+  }
+
+  .ribbon-text-row,
+  .ribbon-text-track,
+  .ribbon-sequence {
+    font-size: 1rem;
+  }
+}
+
 @media (max-width: 768px) {
   .ribbon-section {
     height: 140px;
   }
 
   .ribbon-strip--back {
-    height: 70px;
+    height: 50px;
+    transform: rotate(-2deg);
   }
 
   .ribbon-strip--front {
-    height: 56px;
+    height: 52px;
+    transform: rotate(3deg);
   }
 
-  .ribbon-text-row {
-    font-size: 0.78rem;
-    gap: 22px;
+  .ribbon-text-row,
+  .ribbon-text-track,
+  .ribbon-sequence {
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+  }
+
+  .ribbon-star {
+    font-size: 0.9rem;
+    margin: 0 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ribbon-section {
+    height: 120px;
+  }
+
+  .ribbon-strip {
+    left: -80vw;
+    width: 240vw;
+  }
+
+  .ribbon-strip--back {
+    height: 46px;
+  }
+
+  .ribbon-strip--front {
+    height: 48px;
+  }
+
+  .ribbon-text-row,
+  .ribbon-text-track,
+  .ribbon-sequence {
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+  }
+
+  .ribbon-star {
+    font-size: 0.8rem;
   }
 }
