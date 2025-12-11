@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+
+.skills-section {
+  width: 100%;
+  min-height: 100vh; /* a bit extra so animation has room */
+    background:
+
+    #050816;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 1.5rem 8rem;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.skills-inner {
+  max-width: 1200px;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  margin: 0 auto;
+}
+
+.skills-eyebrow {
+  font-size: 0.8rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin-bottom: 0.75rem;
+}
+
+.skills-title {
+  font-family: "Instrument Serif", serif;
+  font-size: clamp(2.4rem, 4vw, 3.4rem);
+  font-weight: 500;
+  margin-bottom: 3rem;
+}
+
+.skills-title span {
+  background: linear-gradient(90deg, #ff4fd8, #f9a826, #6b5bff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-style: italic;
+}
+
+/* wrapper that stacks the two rows */
+.skills-rows {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* keep your existing .skills-row as-is */
+.skills-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: nowrap;
+  overflow: visible;
+}
+
+/* Card styling (black rounded squares like your example) */
+.skill-card {
+  perspective: 800px;
+}
+
+.skill-card-inner {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background: radial-gradient(circle at 10% 0%, #313131, #111);
+
+  /* Existing outer shadows */
+  box-shadow:
+    0 18px 35px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.03),
+
+    /* 🔥 NEW white inner glow (top + bottom only) */
+    inset 0 -6px 10px rgba(255, 255, 255, 0.08),
+    inset 0  6px 10px rgba(255, 255, 255, 0.06);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    background 0.35s ease;
+}
+
+.skill-card-inner img {
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
+}
+
+/* Cute hover tilt */
+.skill-card-inner:hover {
+  transform: translateY(-4px) rotateX(10deg) rotateY(-6deg);
+  box-shadow:
+    0 25px 45px rgba(0, 0, 0, 0.85),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
