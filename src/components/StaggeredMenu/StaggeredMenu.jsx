@@ -12,7 +12,7 @@ export const StaggeredMenu = ({
   className,
   logoUrl = '/src/assets/logos/reactbits-gh-white.svg',
   menuButtonColor = '#fff',
-  openMenuButtonColor = '#fff',
+  openMenuButtonColor = '#000000ff',
   accentColor = '#5227FF',
   changeMenuColorOnOpen = true,
   isFixed = false,
@@ -364,12 +364,12 @@ export const StaggeredMenu = ({
       <header className="staggered-menu-header" aria-label="Main navigation header">
         <div className="sm-logo" aria-label="Logo">
           <img
-            src={logoUrl || '/src/assets/logos/reactbits-gh-white.svg'}
+            src={'/logos/SP-white.png'}
             alt="Logo"
             className="sm-logo-img"
             draggable={false}
-            width={110}
-            height={24}
+            width={220}
+            height={220}
           />
         </div>
         <button
