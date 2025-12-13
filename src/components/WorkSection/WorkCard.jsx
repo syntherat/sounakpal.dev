@@ -1,7 +1,6 @@
 import React from "react";
 import { FiGithub } from "react-icons/fi";
-import { MdArrowOutward } from "react-icons/md";
-import { MdOutlineArrowOutward } from "react-icons/md";
+import { MdArrowOutward, MdOutlineArrowOutward } from "react-icons/md";
 
 export default function WorkCard({ project }) {
   const {
@@ -24,6 +23,7 @@ export default function WorkCard({ project }) {
   };
 
   const images = mockups?.length ? mockups : image ? [image] : [];
+
   const TAG_ICON_MAP = {
     React: "https://img.icons8.com/?size=100&id=asWSSTBrDlTW&format=png&color=000000",
     "Next.js": "https://img.icons8.com/?size=100&id=MWiBjkuHeMVq&format=png&color=000000",
@@ -35,6 +35,20 @@ export default function WorkCard({ project }) {
     NeonDB: "https://neon.com/brand/neon-logomark-light-color.svg",
   };
 
+  const goToProject = () => {
+    if (!href) return;
+    // If you're using react-router, swap this to navigate(href)
+    window.location.href = href;
+  };
+
+  const onCardKeyDown = (e) => {
+    if (!href) return;
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      goToProject();
+    }
+  };
+
   const CTAs = (github || live) && (
     <div className="work2-actions">
       {github && (
@@ -44,10 +58,12 @@ export default function WorkCard({ project }) {
           target="_blank"
           rel="noreferrer"
           onClick={(e) => e.stopPropagation()}
+          aria-label="View GitHub"
         >
           <FiGithub />
         </a>
       )}
+
       {live && (
         <a
           className="work2-action work2-action--solid work2-action-live"
@@ -65,8 +81,14 @@ export default function WorkCard({ project }) {
     </div>
   );
 
-  const CardInner = (
-    <>
+  return (
+    <div
+      className="work2-card"
+      role={href ? "link" : undefined}
+      tabIndex={href ? 0 : undefined}
+      onClick={goToProject}
+      onKeyDown={onCardKeyDown}
+    >
       <div className="work2-thumb work2-thumb--showcase" style={styleVars}>
         <div className="work2-thumbGlow" />
         <div className="work2-thumbNoise" />
@@ -74,7 +96,7 @@ export default function WorkCard({ project }) {
         <div className="work2-showcase">
           {images.slice(0, 2).map((src, idx) => (
             <img
-              key={src}
+              key={`${src}-${idx}`}
               className={`work2-mockup work2-mockup--${idx}`}
               src={src}
               alt={title}
@@ -96,41 +118,32 @@ export default function WorkCard({ project }) {
           <h3 className="work2-cardTitle">{title}</h3>
           {year ? <span className="work2-year">{year}</span> : null}
         </div>
-{!!tags.length && (
-  <div className="work2-tags">
-    {tags.map((t) => {
-      const label = typeof t === "string" ? t : t.label;
-      const icon =
-        typeof t === "string" ? TAG_ICON_MAP[label] : t.icon;
 
-      return (
-        <span className="work2-tag" key={label}>
-          {icon ? (
-            <img
-              className="work2-tagIcon"
-              src={icon}
-              alt=""
-              aria-hidden="true"
-            />
-          ) : null}
-          <span className="work2-tagText">{label}</span>
-        </span>
-      );
-    })}
-  </div>
-)}
+        {!!tags.length && (
+          <div className="work2-tags">
+            {tags.map((t) => {
+              const label = typeof t === "string" ? t : t.label;
+              const icon = typeof t === "string" ? TAG_ICON_MAP[label] : t.icon;
 
+              return (
+                <span className="work2-tag" key={label}>
+                  {icon ? (
+                    <img
+                      className="work2-tagIcon"
+                      src={icon}
+                      alt=""
+                      aria-hidden="true"
+                    />
+                  ) : null}
+                  <span className="work2-tagText">{label}</span>
+                </span>
+              );
+            })}
+          </div>
+        )}
 
         {CTAs}
       </div>
-    </>
-  );
-
-  return href ? (
-    <a className="work2-card" href={href}>
-      {CardInner}
-    </a>
-  ) : (
-    <div className="work2-card">{CardInner}</div>
+    </div>
   );
 }
