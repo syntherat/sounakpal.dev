@@ -60,14 +60,11 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 14px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0);
   color: rgba(255, 255, 255, 0.92);
+  outline: none;
+  border: none;
   cursor: pointer;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   transition: transform 0.18s ease, border-color 0.18s ease;
 }
 
@@ -161,15 +158,13 @@
   position: absolute;
   top: 18px;
   right: 18px;
-  z-index: 2; /* highest */
+  z-index: 2;
   pointer-events: auto;
   width: 46px;
-  height: 46px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  height: 46px;
+  border: none;
+  background: transparent;
   cursor: pointer;
   display: grid;
   place-items: center;
@@ -257,29 +252,37 @@
 }
 
 .navOverlay-socials a {
-  width: 44px;
-  height: 44px;
+  width: 56px;          /* was 44px */
+  height: 56px;         /* was 44px */
   display: grid;
   place-items: center;
   border-radius: 999px;
   text-decoration: none;
-  font-family: "Inter", system-ui, sans-serif;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  font-size: 12px;
   color: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.04);
-  transition: transform 0.18s ease, border-color 0.18s ease,
+  background: transparent;
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
     background 0.18s ease;
 }
-
-.navOverlay-socials a:hover {
-  transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.18);
-  background: rgba(255, 255, 255, 0.06);
+.navOverlay-socials a svg {
+  width: 30px;          /* default is ~20 */
+  height: 30px;
+    transition: 
+    color 0.18s ease,
+    filter 0.18s ease,
+    transform 0.18s ease;
 }
 
+.navOverlay-socials a:hover svg {  
+  color: #a057ff;
+
+filter:
+  drop-shadow(0 0 8px rgba(160, 87, 255, 0.8))
+  drop-shadow(0 0 22px rgba(138, 56, 245, 0.6));
+
+  transform: translateY(-2px) scale(1.08);
+}
 @media (max-width: 576px) {
   .nav {
     top: 12px;
