@@ -14,13 +14,8 @@ export default function Navbar({
   items = [
     { label: "Home", href: "#home" },
     { label: "About", href: "#about" },
-    { label: "Work", href: "#work" },
+    { label: "Projects", href: "#work" },
     { label: "Contact", href: "#contact" },
-  ],
-  socials = [
-    { label: "Instagram", href: "https://www.instagram.com/sounak.mp4/" },
-    { label: "GitHub", href: "https://github.com/syntherat" },
-    { label: "LinkedIn", href: "https://linkedin.com/in/sounak-pal/" },
   ],
 }) {
   const [open, setOpen] = useState(false);
