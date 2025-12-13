@@ -44,10 +44,38 @@ export default function ContactDrawer({ open, onClose }) {
     );
   }, [name, email, msg]);
 
-  const submit = (e) => {
-    e.preventDefault();
+const submit = async (e) => {
+  e.preventDefault();
+  if (!canSend) return;
+
+  try {
+    const res = await fetch("http://localhost:5000/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name,
+        email,
+        message: msg,
+
+        // optional honeypot field (only if you add an invisible input)
+        website: "",
+      }),
+    });
+
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.error || "Send failed");
+
+    // clear
+    setName("");
+    setEmail("");
+    setMsg("");
+
     onClose?.();
-  };
+  } catch (err) {
+    console.error(err);
+    alert("Could not send message. Please try again.");
+  }
+};
 
   // ✅ if not mounted, it does not exist in DOM -> cannot block anything
   if (!isMounted) return null;
