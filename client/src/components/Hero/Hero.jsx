@@ -1,7 +1,7 @@
 import { useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
+import IntroSpline from '../IntroSpline/IntroSpline';
 import HeroText from './HeroText/HeroText';
 import HeroSpline from '../HeroSpline/HeroSpline';
 import './Hero.css';
@@ -177,7 +177,7 @@ export default function Hero({ onHeroMenuVisibilityChange }) {
             </div>
             
             <div className='about-right-wrapper'>
-              <img src="https://picsum.photos/200" />
+              <IntroSpline />
             </div>
           </div>
         </div>

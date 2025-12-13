@@ -106,7 +106,7 @@
 
   /* pull this up under the hero,
      but adjust per screen size via media queries */
-  margin-top: -60vh;
+  margin-top: -80vh;
 }
 
 /* ========= ABOUT SECTION ========= */
