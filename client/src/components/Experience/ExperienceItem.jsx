@@ -9,7 +9,6 @@ export default function ExperienceItem({ year, role, company, description, isLas
 
         <div className="expItem__timeline" aria-hidden="true">
           <span className="expItem__tick" />
-          <span className="expItem__stem" />
         </div>
       </div>
 

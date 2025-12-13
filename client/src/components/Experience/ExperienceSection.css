@@ -1,15 +1,15 @@
 /* ============================
    EXPERIENCE SECTION (FULL CSS)
    Header + Timeline + Responsive
+   (CLEANED + FIXED DOT/RAIL)
    ============================ */
 
 /* Global-ish knobs for alignment */
 :root {
-  --exp-col: 160px;       /* left column width (year + dot/rail) */
-  --exp-rail-x: 112px;    /* rail position INSIDE the left column */
-  --exp-dot: 12px;        /* dot size */
-  --exp-gap: 56px;  
-  --exp-timeline-x: 112px;      /* gap between year col and content */
+  --exp-col: 160px;     /* left column width */
+  --exp-gap: 56px;      /* vertical gap between items */
+  --exp-dot: 12px;      /* dot size */
+  --exp-line: 2px;      /* rail thickness */
 }
 
 /* ===== Section base ===== */
@@ -62,7 +62,6 @@
   color: transparent;
   font-style: italic;
 
-  /* pulse */
   animation: expPulse 10s ease-in-out infinite;
   will-change: filter, background-position, text-shadow;
 }
@@ -92,29 +91,11 @@
   position: relative;
 }
 
-/* Vertical rail aligned to dot center */
-.exp__rail {
-  position: absolute;
-  left: calc(var(--exp-rail-x) + (var(--exp-dot) / 2));
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 45, 85, 0.00),
-    rgba(255, 45, 85, 0.55),
-    rgba(255, 45, 85, 0.00)
-  );
-  box-shadow: 0 0 18px rgba(255, 45, 85, 0.18);
-  opacity: 0.9;
-  pointer-events: none;
-}
-
 /* List wrapper */
 .exp__list {
   display: flex;
   flex-direction: column;
-  gap: clamp(36px, 4vw, 56px);
+  gap: var(--exp-gap);
 }
 
 /* ===== Item ===== */
@@ -122,16 +103,16 @@
   display: grid;
   grid-template-columns: var(--exp-col) 1fr;
   gap: var(--exp-gap);
-  align-items: start;
+  align-items: stretch; /* IMPORTANT: allow left side to match content height */
 }
 
-/* Left column: year + dot (no absolute positioning, so it never drifts) */
+/* Left column: year + timeline */
 .expItem__yearWrap {
   display: grid;
-  /* dot column width (24px) gives a little breathing room */
-  grid-template-columns: calc(var(--exp-rail-x) - 14px) 24px;
-  column-gap: 12px;
+  grid-template-columns: 1fr 26px; /* year | timeline */
+  column-gap: 14px;
   align-items: start;
+  align-self: stretch; /* IMPORTANT */
 }
 
 /* year */
@@ -144,32 +125,59 @@
   white-space: nowrap;
 }
 
-/* dot */
+/* timeline column */
+.expItem__timeline {
+  position: relative;
+  width: 26px;
+  height: 100%;
+}
+
+/* dot (centered) */
 .expItem__tick {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
   width: var(--exp-dot);
   height: var(--exp-dot);
   border-radius: 999px;
-  margin-top: 6px;
 
   background: rgba(255, 45, 85, 0.95);
   box-shadow:
     0 0 0 6px rgba(255, 45, 85, 0.10),
     0 0 24px rgba(255, 45, 85, 0.22);
-  position: relative;
 }
 
-/* inner glossy highlight */
 .expItem__tick::after {
   content: "";
   position: absolute;
   inset: 2px;
   border-radius: inherit;
-  background: radial-gradient(
-    circle at 30% 30%,
-    rgba(255, 255, 255, 0.55),
-    rgba(255, 255, 255, 0) 60%
-  );
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.55), rgba(255,255,255,0) 60%);
   opacity: 0.65;
+}
+
+/* rail line BELOW the dot (per item) */
+.expItem__stem {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: calc(6px + var(--exp-dot) + 10px);
+  bottom: calc(-1 * var(--exp-gap));
+  width: var(--exp-line);
+
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 45, 85, 0.60),
+    rgba(255, 45, 85, 0.12)
+  );
+  box-shadow: 0 0 18px rgba(255, 45, 85, 0.14);
+  opacity: 0.95;
+}
+
+/* stop the line after last item */
+.expItem--last .expItem__stem {
+  display: none;
 }
 
 /* Right side content */
@@ -201,99 +209,12 @@
   color: rgba(255, 255, 255, 0.58);
 }
 
-.exp__grid { position: relative; }
-.exp__list {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(36px, 4vw, 56px);
-}
-
-.expItem {
-  display: grid;
-  grid-template-columns: var(--exp-col) 1fr;
-  gap: var(--exp-gap);
-  align-items: start;
-}
-
-/* left column layout */
-.expItem__yearWrap {
-  display: grid;
-  grid-template-columns: 1fr auto; /* year + timeline */
-  align-items: start;
-  column-gap: 14px;
-}
-
-/* year */
-.expItem__year {
-  margin-top: 2px;
-  font-size: 14px;
-  letter-spacing: 0.10em;
-  color: rgba(255, 255, 255, 0.62);
-  text-align: right;
-  white-space: nowrap;
-}
-
-/* timeline container at fixed x */
-.expItem__timeline {
-  position: relative;
-  width: 24px;                 /* only needs to fit the dot */
-  height: 100%;
-  margin-left: calc(var(--exp-timeline-x) - (24px + 14px)); 
-  /* Explanation: pushes timeline to exact x within left column */
-}
-
-/* dot */
-.expItem__tick {
-  display: block;
-  width: var(--exp-dot);
-  height: var(--exp-dot);
-  border-radius: 999px;
-  margin-top: 6px;
-
-  background: rgba(255, 45, 85, 0.95);
-  box-shadow:
-    0 0 0 6px rgba(255, 45, 85, 0.10),
-    0 0 24px rgba(255, 45, 85, 0.22);
-  position: relative;
-}
-
-.expItem__tick::after {
-  content: "";
-  position: absolute;
-  inset: 2px;
-  border-radius: inherit;
-  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.55), rgba(255,255,255,0) 60%);
-  opacity: 0.65;
-}
-
-/* vertical line BELOW the dot (per item) */
-.expItem__stem {
-  position: absolute;
-  left: calc(var(--exp-dot) / 2);
-  top: calc(6px + var(--exp-dot) + 8px); /* starts just below dot */
-  bottom: -56px; /* matches list gap so it reaches the next item */
-  width: 2px;
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 45, 85, 0.55),
-    rgba(255, 45, 85, 0.10)
-  );
-  box-shadow: 0 0 18px rgba(255, 45, 85, 0.14);
-  opacity: 0.9;
-}
-
-/* stop the line after last item */
-.expItem--last .expItem__stem {
-  display: none;
-}
-
 /* =========================================
    RESPONSIVE: Large tablets / small laptops
    ========================================= */
 @media (max-width: 1100px) {
   :root {
     --exp-col: 150px;
-    --exp-rail-x: 106px;
     --exp-gap: 44px;
   }
 
@@ -303,13 +224,12 @@
 }
 
 /* =========================
-   RESPONSIVE: Tablets
+   RESPONSIVE: Tablets / Mobile
    ========================= */
 @media (max-width: 820px) {
   :root {
     --exp-col: 1fr;
-    --exp-rail-x: 10px; /* rail near left edge on mobile */
-    --exp-gap: 14px;
+    --exp-gap: 20px;
   }
 
   .exp__header {
@@ -321,21 +241,14 @@
     line-height: 1.02;
   }
 
-  /* rail stays aligned to dot */
-  .exp__rail {
-    left: calc(var(--exp-rail-x) + (var(--exp-dot) / 2));
-  }
-
-  /* single column layout, with left padding so content doesn't overlap rail */
   .expItem {
     grid-template-columns: 1fr;
     gap: 12px;
-    padding-left: 28px;
+    padding-left: 28px; /* room for the rail */
   }
 
-  /* year row becomes a small row at top of item */
   .expItem__yearWrap {
-    grid-template-columns: auto 24px;
+    grid-template-columns: auto 26px;
     column-gap: 10px;
     justify-content: start;
   }
@@ -343,6 +256,10 @@
   .expItem__year {
     text-align: left;
     margin-top: 0;
+  }
+
+  .expItem__stem {
+    bottom: calc(-1 * var(--exp-gap));
   }
 }
 
@@ -374,36 +291,4 @@
    ========================= */
 .exp ::selection {
   background: rgba(255, 45, 85, 0.28);
-}
-
-@media (max-width: 820px) {
-  :root {
-    --exp-col: 1fr;
-    --exp-gap: 14px;
-    --exp-timeline-x: 10px; /* put timeline near left edge */
-  }
-
-  .expItem {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    padding-left: 28px;
-  }
-
-  .expItem__yearWrap {
-    grid-template-columns: auto auto;
-    justify-content: start;
-  }
-
-  .expItem__year {
-    text-align: left;
-    margin-top: 0;
-  }
-
-  .expItem__timeline {
-    margin-left: 0; /* keep it next to year on mobile */
-  }
-
-  .expItem__stem {
-    bottom: -44px; /* slightly smaller mobile gaps */
-  }
 }
