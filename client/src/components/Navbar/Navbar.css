@@ -165,6 +165,7 @@
   display: grid;
   place-items: center;
   padding: 24px;
+  padding-inline: clamp(16px, 5vw, 56px);
 }
 
 /* close button */
@@ -217,12 +218,14 @@
   display: grid;
   gap: 18px;
   text-align: center;
-
+  width: min(92vw, 820px);
   /* ensure long menus fit on small heights */
   max-height: min(62vh, 520px);
+  margin-inline: auto;
   overflow: auto;
   padding: 8px 10px;
   scrollbar-width: none;
+  overflow: visible;
 }
 .navOverlay-menu::-webkit-scrollbar {
   width: 0;
@@ -250,11 +253,11 @@
 
 /* subtle alternating offset + slant */
 .navOverlay-menu a.is-left {
-  transform: translateX(-36px) rotate(-2deg);
+  transform: translateX(clamp(-36px, -4vw, -12px)) rotate(-2deg);
 }
 
 .navOverlay-menu a.is-right {
-  transform: translateX(36px) rotate(2deg);
+  transform: translateX(clamp(12px, 4vw, 36px)) rotate(2deg);
 }
 
 /* hover: fade others, straighten hovered */
@@ -439,7 +442,7 @@
   /* On phones, reduce/center the slant offsets so it doesn't clip */
   .navOverlay-menu a.is-left,
   .navOverlay-menu a.is-right {
-    transform: translateX(0px) rotate(0deg);
+    transform: translateX(0) rotate(0);
   }
 
   /* Keep the hover effect but avoid layout jump */
