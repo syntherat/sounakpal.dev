@@ -25,13 +25,15 @@ export default function WorkCard({ project }) {
 
   const images = mockups?.length ? mockups : image ? [image] : [];
   const TAG_ICON_MAP = {
-  React: "/icons/react.svg",
-  "Next.js": "/icons/nextjs.svg",
-  Tailwind: "/icons/tailwind.svg",
-  Prisma: "/icons/prisma.svg",
-  GSAP: "/icons/gsap3.png",
-  UI: "/icons/ui.svg",
-};
+    React: "https://img.icons8.com/?size=100&id=asWSSTBrDlTW&format=png&color=000000",
+    "Next.js": "https://img.icons8.com/?size=100&id=MWiBjkuHeMVq&format=png&color=000000",
+    Tailwind: "https://img.icons8.com/?size=100&id=x7XMNGh2vdqA&format=png&color=000000",
+    Prisma: "/icons/prisma.svg",
+    GSAP: "/icons/gsap3.png",
+    UI: "/icons/ui.svg",
+    "Motion.dev": "https://raw.githubusercontent.com/pheralb/svgl/main/static/library/motion_dark.svg",
+    NeonDB: "https://neon.com/brand/neon-logomark-light-color.svg",
+  };
 
   const CTAs = (github || live) && (
     <div className="work2-actions">
