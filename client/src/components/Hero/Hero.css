@@ -51,9 +51,10 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  overflow: visible;
-  filter: blur(0.3px);
   pointer-events: none;
+
+  /* ✅ remove blur filter (expensive). If you want softness, do it via gradient */
+  filter: none;
 }
 
 .particle {
@@ -63,13 +64,18 @@
   width: 6px;
   height: 6px;
   border-radius: 999px;
-  background: radial-gradient(circle, #ffffff, rgba(111, 63, 240, 0.4));
-  mix-blend-mode: screen;
+
+  background: radial-gradient(circle, rgba(255,255,255,0.95), rgba(111,63,240,0.25));
   opacity: 0;
   pointer-events: none;
-  transform: translate(-50%, -50%);
-}
 
+  /* ✅ GPU-friendly */
+  transform: translate3d(-50%, -50%, 0);
+  will-change: transform, opacity;
+
+  /* ✅ avoid blend-mode on mobile; it’s costly */
+  mix-blend-mode: screen;
+}
 /* SOUNAK text */
 .hero-name {
   font-family: 'Inter', sans-serif;
@@ -108,6 +114,7 @@
      but adjust per screen size via media queries */
   margin-top: -80vh;
 }
+
 
 /* ========= ABOUT SECTION ========= */
 
@@ -331,6 +338,10 @@
     linear-gradient(#8A38F5, #8A38F5) left/15% 100% no-repeat,
     linear-gradient(#8A38F5, #8A38F5) right/73% 100% no-repeat;
 }
+  .particle {
+    mix-blend-mode: normal;
+    opacity: 0; /* still controlled by GSAP when used */
+  }
 }
 
 /* Phones */
