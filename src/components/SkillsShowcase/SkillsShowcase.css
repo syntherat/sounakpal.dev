@@ -44,11 +44,11 @@
   font-style: italic;
 
   /* pulse */
-  animation: saucePulse 4s ease-in-out infinite;
+  animation: expPulse 10s ease-in-out infinite;
   will-change: filter, background-position, text-shadow;
 }
 
-@keyframes saucePulse {
+@keyframes expPulse {
   0% {
     background-position: 0% 50%;
     filter: brightness(1);
