@@ -27,10 +27,12 @@
 }
 
 .ft__logo {
-  width: 300px;            /* make logo bigger */
+  width: clamp(140px, 22vw, 300px);  /* responsive scaling */
   height: auto;
   display: block;
   opacity: 0.95;
+
+  /* keep your depth */
   filter: drop-shadow(0 18px 26px rgba(0, 0, 0, 0.55));
 }
 
@@ -74,7 +76,6 @@
   padding: 2px 0;
   width: max-content;
 }
-
 
 .ft__link::after {
   content: "";
@@ -231,5 +232,11 @@
 @media (max-width: 560px) {
   .ft__cols {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 380px) {
+  .ft__logo {
+    width: clamp(120px, 60vw, 160px);
   }
 }
