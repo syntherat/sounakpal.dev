@@ -1,6 +1,7 @@
 import { useState } from "react";
 import HomePage from "./pages/HomePage";
 import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const [menuVisible, setMenuVisible] = useState(false);
@@ -18,6 +19,7 @@ function App() {
         ]}
       />
       <HomePage onHeroMenuVisibilityChange={setMenuVisible} />
+      <Footer />
     </>
   );
 }
