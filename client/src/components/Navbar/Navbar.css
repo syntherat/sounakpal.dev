@@ -17,6 +17,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 14px;
 }
 
 .nav-logo {
@@ -26,6 +27,7 @@
   gap: 10px;
   text-decoration: none;
   color: rgba(255, 255, 255, 0.92);
+  min-width: 0;
 }
 
 .nav-logoImg {
@@ -53,6 +55,9 @@
   font-size: 13px;
   text-transform: uppercase;
   opacity: 0.9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .nav-btn {
@@ -66,11 +71,16 @@
   border: none;
   cursor: pointer;
   transition: transform 0.18s ease, border-color 0.18s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .nav-btn:hover {
   transform: translateY(-1px);
   border-color: rgba(255, 255, 255, 0.16);
+}
+
+.nav-btn:active {
+  transform: translateY(0px);
 }
 
 .nav-btnText {
@@ -124,13 +134,17 @@
   background: rgba(2, 4, 12, 0.55);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+
+  /* mobile browser safe areas */
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .navOverlay::before {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 0; /* behind */
+  z-index: 0;
   pointer-events: none;
   background: radial-gradient(
       900px 420px at 50% 15%,
@@ -147,7 +161,7 @@
 .navOverlay-center {
   position: absolute;
   inset: 0;
-  z-index: 1; /* above ::before */
+  z-index: 1;
   display: grid;
   place-items: center;
   padding: 24px;
@@ -161,8 +175,8 @@
   z-index: 2;
   pointer-events: auto;
   width: 46px;
-  border-radius: 999px;
   height: 46px;
+  border-radius: 999px;
   border: none;
   background: transparent;
   cursor: pointer;
@@ -170,6 +184,7 @@
   place-items: center;
   transition: transform 0.18s ease, background 0.18s ease,
     border-color 0.18s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .navOverlay-close:hover {
@@ -202,6 +217,16 @@
   display: grid;
   gap: 18px;
   text-align: center;
+
+  /* ensure long menus fit on small heights */
+  max-height: min(62vh, 520px);
+  overflow: auto;
+  padding: 8px 10px;
+  scrollbar-width: none;
+}
+.navOverlay-menu::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 .navOverlay-menu a {
@@ -217,6 +242,10 @@
     color 0.18s ease,
     text-shadow 0.18s ease;
   transform-origin: center;
+
+  /* better tap target on mobile */
+  padding: 6px 10px;
+  border-radius: 12px;
 }
 
 /* subtle alternating offset + slant */
@@ -241,6 +270,7 @@
   text-shadow: 0 0 16px rgba(138, 56, 245, 0.28);
   transform: translateX(0px) rotate(0deg) translateY(-1px);
 }
+
 /* bottom-center socials */
 .navOverlay-socials {
   position: absolute;
@@ -249,11 +279,14 @@
   transform: translateX(-50%);
   display: inline-flex;
   gap: 14px;
+
+  /* keep visible even on short heights */
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .navOverlay-socials a {
-  width: 56px;          /* was 44px */
-  height: 56px;         /* was 44px */
+  width: 56px;
+  height: 56px;
   display: grid;
   place-items: center;
   border-radius: 999px;
@@ -264,33 +297,204 @@
     transform 0.18s ease,
     border-color 0.18s ease,
     background 0.18s ease;
+  -webkit-tap-highlight-color: transparent;
 }
+
+.navOverlay-socials a:active {
+  transform: translateY(0px);
+}
+
 .navOverlay-socials a svg {
-  width: 30px;          /* default is ~20 */
+  width: 30px;
   height: 30px;
-    transition: 
+  transition:
     color 0.18s ease,
     filter 0.18s ease,
     transform 0.18s ease;
 }
 
-.navOverlay-socials a:hover svg {  
+.navOverlay-socials a:hover svg {
   color: #a057ff;
-
-filter:
-  drop-shadow(0 0 8px rgba(160, 87, 255, 0.8))
-  drop-shadow(0 0 22px rgba(138, 56, 245, 0.6));
-
+  filter:
+    drop-shadow(0 0 8px rgba(160, 87, 255, 0.8))
+    drop-shadow(0 0 22px rgba(138, 56, 245, 0.6));
   transform: translateY(-2px) scale(1.08);
 }
+
+/* =========================
+   RESPONSIVE BREAKPOINTS
+   ========================= */
+
+/* Large tablets / small laptops */
+@media (max-width: 1024px) {
+  .nav-inner {
+    padding: 0 16px;
+  }
+
+  .nav-logoImg {
+    height: 54px;
+  }
+
+  .navOverlay-center {
+    padding: 22px;
+  }
+
+  .navOverlay-menu a.is-left {
+    transform: translateX(-26px) rotate(-1.5deg);
+  }
+  .navOverlay-menu a.is-right {
+    transform: translateX(26px) rotate(1.5deg);
+  }
+
+  .navOverlay-socials a {
+    width: 52px;
+    height: 52px;
+  }
+  .navOverlay-socials a svg {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+  .nav {
+    top: 14px;
+  }
+
+  .nav-logoImg {
+    height: 48px;
+  }
+
+  .nav-btnText {
+    font-size: 11px;
+  }
+
+  .navOverlay-center {
+    padding: 18px;
+  }
+
+  .navOverlay-menu {
+    gap: 14px;
+    max-height: min(60vh, 460px);
+  }
+
+  /* soften the alternating offset on touch screens */
+  .navOverlay-menu a.is-left {
+    transform: translateX(-18px) rotate(-1deg);
+  }
+  .navOverlay-menu a.is-right {
+    transform: translateX(18px) rotate(1deg);
+  }
+
+  .navOverlay-socials {
+    bottom: 22px;
+    gap: 12px;
+  }
+
+  .navOverlay-socials a {
+    width: 50px;
+    height: 50px;
+  }
+  .navOverlay-socials a svg {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+/* Phones */
 @media (max-width: 576px) {
   .nav {
     top: 12px;
   }
+
+  .nav-inner {
+    padding: 0 14px;
+  }
+
+  .nav-logoImg {
+    height: 44px;
+  }
+
   .nav-btnText {
     display: none;
   }
+
+  .navOverlay-close {
+    top: 12px;
+    right: 12px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .navOverlay-center {
+    padding: 16px;
+  }
+
+  .navOverlay-menu {
+    gap: 12px;
+    max-height: min(58vh, 420px);
+  }
+
+  /* On phones, reduce/center the slant offsets so it doesn't clip */
+  .navOverlay-menu a.is-left,
+  .navOverlay-menu a.is-right {
+    transform: translateX(0px) rotate(0deg);
+  }
+
+  /* Keep the hover effect but avoid layout jump */
+  .navOverlay-menu a:hover {
+    transform: translateY(-1px);
+  }
+
   .navOverlay-socials {
-    bottom: 22px;
+    bottom: 18px;
+  }
+
+  .navOverlay-socials a {
+    width: 48px;
+    height: 48px;
+  }
+  .navOverlay-socials a svg {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+/* Very small phones / short screens */
+@media (max-width: 380px), (max-height: 680px) {
+  .nav-logoImg {
+    height: 40px;
+  }
+
+  .navOverlay-menu {
+    max-height: min(54vh, 360px);
+    gap: 10px;
+  }
+
+  .navOverlay-menu a {
+    font-size: clamp(28px, 7vw, 46px);
+    padding: 5px 8px;
+  }
+
+  .navOverlay-socials a {
+    width: 44px;
+    height: 44px;
+  }
+  .navOverlay-socials a svg {
+    width: 23px;
+    height: 23px;
+  }
+}
+
+/* Reduce motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .nav-btn,
+  .nav-btnIcon .line,
+  .navOverlay-menu a,
+  .navOverlay-close,
+  .navOverlay-socials a,
+  .navOverlay-socials a svg {
+    transition: none !important;
   }
 }
