@@ -89,10 +89,9 @@
   justify-content: center;
   align-items: center;
   gap: 15px;
-  flex-wrap: nowrap;       /* keep no-wrap so GSAP positions stay correct */
+  flex-wrap: nowrap;
   overflow: visible;
 }
-
 /* Card styling */
 .skill-card {
   perspective: 800px;
@@ -133,6 +132,28 @@
     0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
+
+/* Desktop layout (default) */
+.skills-rows-desktop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.skills-grid-mobile {
+  display: none; /* hidden on desktop */
+}
+
+.skills-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: nowrap; /* ✅ stays 3 rows */
+  overflow: visible;
+}
+
 /* =====================
    RESPONSIVE TWEAKS
    ===================== */
@@ -142,11 +163,24 @@
   .skills-section {
     padding: 5rem 1.5rem 6rem;
   }
-
   .skills-row {
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
     gap: 12px;
-  }
+    row-gap: 12px;
 
+    /* ✅ big enough so row1 doesn’t orphan the last icon */
+    max-width: 860px;
+    margin: 0 auto;
+
+    /* ✅ don’t scale rows — scaling causes spacing to look off */
+    transform: none;
+  }
+  /* optional: remove your row scaling so it stays truly responsive */
+  .skills-row {
+    transform: none;
+  }
   .skill-card-inner {
     width: 60px;
     height: 60px;
@@ -169,15 +203,18 @@
   }
 
   .skills-rows {
-    gap: 1.5rem;
+    gap: 0;
   }
 
   /* scale whole rows slightly so they fit without horizontal scroll */
   .skills-row {
     transform: scale(0.9);
     transform-origin: center;
-  }
+  } 
 
+    .skills-row {
+    max-width: 640px;
+  }
   .skill-card-inner {
     width: 56px;
     height: 56px;
@@ -205,8 +242,82 @@
   }
 
   .skills-row {
-    gap: 10px;
+    gap: 0px;
     transform: scale(0.8);
+  }
+  .skills-row {
+    max-width: 380px; /* fewer icons per line */
+    row-gap: 0px;
+  }
+
+  .skill-card-inner {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+  }
+
+  .skill-card-inner img {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media (max-width: 1024px) {
+  /* hide the 3-row structure */
+  .skills-rows-desktop {
+    display: none;
+  }
+
+  /* show the combined flexbox grid */
+  .skills-grid-mobile {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    row-gap: 12px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  /* remove any GSAP transforms from desktop */
+  .skill-card {
+    transform: none;
+  }
+
+  .skill-card-inner {
+    width: 60px;
+    height: 60px;
+  }
+
+  .skill-card-inner img {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .skills-grid-mobile {
+    max-width: 640px;
+    gap: 12px;
+    row-gap: 12px;
+  }
+
+  .skill-card-inner {
+    width: 56px;
+    height: 56px;
+  }
+
+  .skill-card-inner img {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .skills-grid-mobile {
+    max-width: 380px;
+    gap: 10px;
+    row-gap: 10px;
   }
 
   .skill-card-inner {

@@ -100,6 +100,8 @@ const row3Skills = [
   { name: "Vercel", icon: "/icons/vercel.svg" },
 ];
 
+const allSkills = [...row1Skills, ...row2Skills, ...row3Skills];
+
 export default function SkillsShowcase() {
   const sectionRef = useRef(null);
 
@@ -107,33 +109,34 @@ export default function SkillsShowcase() {
   const row2CardsRef = useRef([]);
   const row3CardsRef = useRef([]);
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      const row1 = row1CardsRef.current.filter(Boolean);
-      const row2 = row2CardsRef.current.filter(Boolean);
-      const row3 = row3CardsRef.current.filter(Boolean);
+useLayoutEffect(() => {
+  const ctx = gsap.context(() => {
+    const row1 = row1CardsRef.current.filter(Boolean);
+    const row2 = row2CardsRef.current.filter(Boolean);
+    const row3 = row3CardsRef.current.filter(Boolean);
 
-      if (!row1.length && !row2.length && !row3.length) return;
+    if (!row1.length && !row2.length && !row3.length) return;
 
-      const rowsConfig = [
-        { cards: row1, flatY: -12 }, // top row
-        { cards: row2, flatY: 0 }, // middle row
-        { cards: row3, flatY: 14 }, // bottom row
-      ];
+    const rowsConfig = [
+      { cards: row1, flatY: -12 },
+      { cards: row2, flatY: 0 },
+      { cards: row3, flatY: 14 },
+    ];
 
-      const radius = 260;
-      const angleRange = 150;
+    const radius = 260;
+    const angleRange = 150;
 
-      // --- INITIAL CURVED LAYOUT FOR ALL ROWS ---
+    const setFinalState = () => {
+      rowsConfig.forEach(({ cards, flatY }) => {
+        gsap.set(cards, { x: 0, y: flatY, rotation: 0, opacity: 1, scale: 1 });
+      });
+    };
+
+    const setCurvedInitial = () => {
       rowsConfig.forEach(({ cards, flatY }) => {
         cards.forEach((card, i) => {
           const t = cards.length > 1 ? i / (cards.length - 1) : 0;
-          const angle = gsap.utils.mapRange(
-            0,
-            1,
-            -angleRange / 2,
-            angleRange / 2
-          )(t);
+          const angle = gsap.utils.mapRange(0, 1, -angleRange / 2, angleRange / 2)(t);
           const rad = (angle * Math.PI) / 180;
 
           const x = Math.sin(rad) * radius;
@@ -148,8 +151,14 @@ export default function SkillsShowcase() {
           });
         });
       });
+    };
 
-      // --- TIMELINE + SCROLLTRIGGER ---
+    const mm = gsap.matchMedia();
+
+    // ✅ Desktop only: curved -> straight + pinned scroll animation
+    mm.add("(min-width: 1025px)", () => {
+      setCurvedInitial();
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -157,10 +166,10 @@ export default function SkillsShowcase() {
           end: "+=750",
           scrub: true,
           pin: true,
+          invalidateOnRefresh: true,
         },
       });
 
-      // all rows animate together into straight-ish lines
       rowsConfig.forEach(({ cards, flatY }) => {
         tl.to(
           cards,
@@ -173,13 +182,32 @@ export default function SkillsShowcase() {
             ease: "power3.out",
             duration: 1,
           },
-          0 // same time
+          0
         );
       });
-    }, sectionRef);
 
-    return () => ctx.revert();
-  }, []);
+      // cleanup when leaving desktop breakpoint
+      return () => {
+        tl.kill();
+        ScrollTrigger.getAll().forEach((st) => st.kill());
+      };
+    });
+
+    // ✅ Tablet/phone: no ScrollTrigger at all, just final state
+mm.add("(max-width: 1024px)", () => {
+  rowsConfig.forEach(({ cards }) => {
+    gsap.set(cards, { clearProps: "transform" });
+    gsap.set(cards, { opacity: 1 });
+  });
+  ScrollTrigger.getAll().forEach((st) => st.kill());
+  return () => {};
+});
+    return () => mm.revert();
+  }, sectionRef);
+
+  return () => ctx.revert();
+}, []);
+
 
   return (
     <section className="skills-section" ref={sectionRef}>
@@ -189,55 +217,64 @@ export default function SkillsShowcase() {
           The Secret <span>Sauce</span>
         </h2>
 
-        <div className="skills-rows">
-          <div className="skills-row">
-            {row1Skills.map((skill, i) => (
-              <div
-                key={`row1-${skill.name}-${i}`}
-                className="skill-card"
-                ref={(el) => {
-                  row1CardsRef.current[i] = el;
-                }}
-              >
-                <div className="skill-card-inner">
-                  <SkillTooltipIcon icon={skill.icon} label={skill.name} />
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="skills-row">
-            {row2Skills.map((skill, i) => (
-              <div
-                key={`row2-${skill.name}-${i}`}
-                className="skill-card"
-                ref={(el) => {
-                  row2CardsRef.current[i] = el;
-                }}
-              >
-                <div className="skill-card-inner">
-                  <SkillTooltipIcon icon={skill.icon} label={skill.name} />
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="skills-row">
-            {row3Skills.map((skill, i) => (
-              <div
-                key={`row3-${skill.name}-${i}`}
-                className="skill-card"
-                ref={(el) => {
-                  row3CardsRef.current[i] = el;
-                }}
-              >
-                <div className="skill-card-inner">
-                  <SkillTooltipIcon icon={skill.icon} label={skill.name} />
-                </div>
-              </div>
-            ))}
+<div className="skills-rows">
+  {/* DESKTOP/TABLET (3 rows) */}
+  <div className="skills-rows-desktop">
+    <div className="skills-row">
+      {row1Skills.map((skill, i) => (
+        <div
+          key={`row1-${skill.name}-${i}`}
+          className="skill-card"
+          ref={(el) => (row1CardsRef.current[i] = el)}
+        >
+          <div className="skill-card-inner">
+            <SkillTooltipIcon icon={skill.icon} label={skill.name} />
           </div>
         </div>
+      ))}
+    </div>
+
+    <div className="skills-row">
+      {row2Skills.map((skill, i) => (
+        <div
+          key={`row2-${skill.name}-${i}`}
+          className="skill-card"
+          ref={(el) => (row2CardsRef.current[i] = el)}
+        >
+          <div className="skill-card-inner">
+            <SkillTooltipIcon icon={skill.icon} label={skill.name} />
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div className="skills-row">
+      {row3Skills.map((skill, i) => (
+        <div
+          key={`row3-${skill.name}-${i}`}
+          className="skill-card"
+          ref={(el) => (row3CardsRef.current[i] = el)}
+        >
+          <div className="skill-card-inner">
+            <SkillTooltipIcon icon={skill.icon} label={skill.name} />
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  {/* MOBILE (one flexbox grid) */}
+  <div className="skills-grid-mobile">
+    {allSkills.map((skill, i) => (
+      <div key={`all-${skill.name}-${i}`} className="skill-card">
+        <div className="skill-card-inner">
+          <SkillTooltipIcon icon={skill.icon} label={skill.name} />
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
       </div>
     </section>
   );
