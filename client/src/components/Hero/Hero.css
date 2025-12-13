@@ -1,0 +1,373 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Space+Grotesk:wght@300..700&display=swap');
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;          /* full screen hero */
+  min-height: 100svh;     /* better on mobile browsers */
+  overflow: hidden;
+}
+
+/* The gradient background layer */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(180, 83, 255, 0.6), transparent 20%),
+    radial-gradient(circle at 70% 50%, rgba(127, 63, 191, 0.795), transparent 45%),
+    #050816;
+  z-index: 0; 
+  will-change: transform;
+}
+
+/* Main hero content (text + spline) */
+.hero-wrapper {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(4rem, 8vw, 20rem);                 /* responsive gap */
+  padding: 0 clamp(1.5rem, 5vw, 5rem);          /* responsive side padding */
+  will-change: transform, opacity;
+}
+
+/* When overlay animation kicks in */
+.hero-name-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* particle field behind the text */
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: visible;
+  filter: blur(0.3px);
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: radial-gradient(circle, #ffffff, rgba(111, 63, 240, 0.4));
+  mix-blend-mode: screen;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+/* SOUNAK text */
+.hero-name {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: clamp(3rem, 17vw, 10rem); /* scales for phones → big desktop */
+
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(111, 63, 240, 0.9);
+
+  background-image: radial-gradient(circle at center, #6f3ff0, #362055);
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-repeat: no-repeat;
+
+  background-position: 50% 50%;
+  background-size: 0% 0%;
+
+  text-shadow: 0 0 0 rgba(111, 63, 240, 0);
+}
+
+/* =========================
+   BELOW HERO SECTION
+   ========================= */
+
+.below-content {
+  min-height: 100vh;
+  padding: clamp(3rem, 6vw, 6rem) clamp(1.5rem, 6vw, 5rem);
+  background: #050816;
+  color: #ffffff;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Space Grotesk',
+    sans-serif;
+
+  /* pull this up under the hero,
+     but adjust per screen size via media queries */
+  margin-top: -60vh;
+}
+
+/* ========= ABOUT SECTION ========= */
+
+.about-wrapper {
+  max-width: 1350px;
+  margin: 0 auto;
+}
+
+.about-wrapper-main {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: clamp(1rem, 8vw, 4rem);
+}
+
+.about-wrapper h2 {
+  font-family: "Instrument Serif", serif;
+  color: #999999;
+  font-size: clamp(2rem, 3vw, 2.5rem);
+  font-weight: 300;
+  margin-bottom: clamp(2.5rem, 4vw, 5rem);
+}
+
+.about-wrapper .about-left-wrapper {
+  font-family: "Space Grotesk", sans-serif;
+  display: flex;
+  flex-direction: column;
+  flex: 1.2;
+}
+
+.about-wrapper .about-left-wrapper > p:first-child {
+  padding: 0 0 1rem;
+  font-weight: 600; 
+  font-size: 1.1rem;
+}
+
+.purple-accent {
+  color: #8A38F5;
+}
+
+.about-wrapper .about-left-wrapper .sounak {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  margin-bottom: 1.2rem;
+  position: relative;
+  display: inline-block;
+}
+
+/* the underline bars */
+.about-left-wrapper .sounak::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  bottom: 6px;
+  width: 71.5%;
+  height: 6px;
+
+  background:
+    linear-gradient(#8A38F5, #8A38F5) left/15% 100% no-repeat,
+    linear-gradient(#8A38F5, #8A38F5) right/73% 100% no-repeat;
+}
+
+.about-wrapper .about-left-wrapper .about {
+  color: #999999;
+  font-size: clamp(1rem, 2vw, 1.6rem);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  max-width: 50rem;
+}
+
+.about-wrapper .about-left-wrapper .buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 2.5rem;
+}
+
+/* base button style */
+.about-wrapper .about-left-wrapper .buttons button {
+  padding: 12px 22px;
+  border-radius: 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  outline: none;
+  transition: background 0.2s ease, border-color 0.2s ease,
+              box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+/* primary (purple) */
+.about-wrapper .about-left-wrapper .buttons button:first-child {
+  background: linear-gradient(90deg, #522b8f, #6833a8);
+  border: none;
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+/* secondary (outlined) */
+.about-wrapper .about-left-wrapper .buttons button:last-child {
+  background-color: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.about-wrapper .about-left-wrapper .buttons button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+.about-wrapper .companies-header {
+  color: #999999;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.2rem;
+}
+
+.about-wrapper .companies {
+  display: flex;
+  flex-wrap: wrap;
+  color: #fafafa9a;
+  gap: 20px;
+  font-weight: 700;
+  font-size: clamp(1.3rem, 2.2vw, 2rem);
+  font-family: 'Inter', sans-serif;
+  margin-top: 1.4rem;
+}
+
+.about-wrapper .about-wrapper-main .about-right-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.about-wrapper .about-wrapper-main .about-right-wrapper img {
+  width: 100%;
+  max-width: 30rem;
+  height: auto;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+/* =========================
+   RESPONSIVE BREAKPOINTS
+   ========================= */
+
+/* Large tablets / small laptops */
+@media (max-width: 1024px) {
+  .hero-wrapper {
+    gap: clamp(2.5rem, 4vw, 4rem);
+  }
+
+  .below-content {
+    margin-top: -45vh;
+  }
+
+  .about-wrapper-main {
+    gap: 3rem;
+  }
+  .about-left-wrapper .sounak::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  bottom: 5px;
+  width: 86%;
+  height: 6px;
+
+  background:
+    linear-gradient(#8A38F5, #8A38F5) left/15% 100% no-repeat,
+    linear-gradient(#8A38F5, #8A38F5) right/73% 100% no-repeat;
+}
+}
+
+/* Tablets & small devices */
+@media (max-width: 768px) {
+  .hero {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .hero-wrapper {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    padding-top: 5rem;
+    padding-bottom: 4rem;
+    gap: 2.5rem;
+  }
+
+  .below-content {
+    margin-top: -30vh;    /* smaller overlap to avoid huge white gap */
+  }
+
+  .about-wrapper-main {
+    flex-direction: column-reverse; /* image below text or vice versa, your call */
+    align-items: flex-start;
+  }
+
+  .about-wrapper .about-left-wrapper {
+    width: 100%;
+  }
+
+  .about-wrapper h2 {
+    margin-bottom: 2.5rem;
+  }
+
+    .about-left-wrapper .sounak::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  bottom: 3px;
+  width: 46.5%;
+  height: 5px;
+
+  background:
+    linear-gradient(#8A38F5, #8A38F5) left/15% 100% no-repeat,
+    linear-gradient(#8A38F5, #8A38F5) right/73% 100% no-repeat;
+}
+}
+
+/* Phones */
+@media (max-width: 576px) {
+  .hero-wrapper {
+    padding: 3.5rem 1.5rem 3rem;
+    align-items: flex-start;
+  }
+
+  .below-content {
+    margin-top: -18vh;
+    padding-inline: 1.25rem;
+  }
+
+  .about-wrapper .about-left-wrapper .buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .about-wrapper .about-wrapper-main .about-right-wrapper img {
+    max-width: 100%;
+  }
+
+  .about-wrapper .companies {
+    gap: 12px;
+  }
+
+      .about-left-wrapper .sounak::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  bottom: 4px;
+  width: 58%;
+  height: 5px;
+
+  background:
+    linear-gradient(#8A38F5, #8A38F5) left/15% 100% no-repeat,
+    linear-gradient(#8A38F5, #8A38F5) right/73% 100% no-repeat;
+}
+}

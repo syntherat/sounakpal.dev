@@ -1,0 +1,120 @@
+/* ===========================
+   Tooltip for skill icons
+   =========================== */
+
+.skill-tooltip-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* the icon itself */
+.skill-tooltip-icon {
+  position: relative;
+  z-index: 1;
+  padding: 8px;
+  border-radius: 18px;
+  background: radial-gradient(circle at 20% 0%, #ffffff22, #000000 70%);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 18px 45px rgba(0, 0, 0, 0.7);
+  transition:
+    transform 0.2s ease-out,
+    box-shadow 0.2s ease-out,
+    background 0.2s ease-out;
+}
+
+.skill-tooltip-icon img {
+  display: block;
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+/* hover pop for icon */
+.skill-tooltip-wrapper:hover .skill-tooltip-icon {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.15),
+    0 22px 60px rgba(0, 0, 0, 0.9);
+  background: radial-gradient(circle at 20% 0%, #ffffff33, #000000 75%);
+}
+
+/* tooltip bubble */
+.skill-tooltip-bubble {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px) scale(0.95);
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 0% 0%, #7f5dff, #111122);
+  box-shadow:
+    0 0 25px rgba(127, 93, 255, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 5;
+
+  /* animation feel */
+  transition:
+    opacity 0.18s ease-out,
+    transform 0.18s ease-out;
+}
+
+/* tooltip arrow */
+.skill-tooltip-bubble::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: #151525 transparent transparent transparent;
+}
+
+/* text inside */
+.skill-tooltip-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #f9f9ff;
+}
+
+/* subtle inner glow line */
+.skill-tooltip-glow {
+  position: absolute;
+  inset: auto 12px -1px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.9),
+    transparent
+  );
+  opacity: 0.8;
+}
+
+/* hover state – show tooltip */
+.skill-tooltip-wrapper:hover .skill-tooltip-bubble {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+/* optional float animation when visible */
+.skill-tooltip-wrapper:hover .skill-tooltip-bubble {
+  animation: skill-tooltip-float 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes skill-tooltip-float {
+  0% {
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  100% {
+    transform: translateX(-50%) translateY(-4px) scale(1.02);
+  }
+}

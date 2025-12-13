@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Space+Grotesk:wght@300..700&display=swap');
+
+.hero-text {
+  color: #ffffff;
+}
+
+.hero-text p {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  text-align: left;
+  font-size: clamp(2.2rem, 4vw, 4rem);
+  line-height: 1.05;
+}
+
+.hero-text span {
+  color: #C465FF;
+}
+
+/* center text on small screens if you want */
+@media (max-width: 768px) {
+  .hero-text p {
+    font-size: clamp(2rem, 6vw, 2.8rem);
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-text p {
+    font-size: clamp(1.8rem, 7vw, 2.4rem);
+  }
+}

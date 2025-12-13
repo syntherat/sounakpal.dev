@@ -1,0 +1,439 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+/* ===== Work / Case Studies section ===== */
+
+.work2-section {
+  padding: 84px 18px 110px;
+  background: #050816;
+  color: #fff;
+}
+
+.work2-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.work2-header {
+  margin-bottom: 40px;
+}
+
+.work2-kicker {
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  color: rgba(255, 255, 255, 0.93);
+}
+
+.work2-title {
+  margin: 0;
+  max-width: 900px;
+  font-family: "Instrument Serif", serif;
+  font-size: 4rem;
+  font-weight: 300;
+  line-height: 1.05;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.work2-title span {
+  background: linear-gradient(90deg, #ff4fd8, #df2d00, #6b5bff, #ff4fd8);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-style: italic;
+  animation: workPulse 10s ease-in-out infinite;
+  will-change: filter, background-position, text-shadow;
+}
+
+@keyframes workPulse {
+  0% {
+    background-position: 0% 50%;
+    filter: brightness(1);
+    text-shadow: 0 0 0 rgba(255, 79, 216, 0);
+  }
+  50% {
+    background-position: 100% 50%;
+    filter: brightness(1.25);
+    text-shadow: 0 0 14px rgba(255, 79, 216, 0.35),
+      0 0 26px rgba(107, 91, 255, 0.25);
+  }
+  100% {
+    background-position: 0% 50%;
+    filter: brightness(1);
+    text-shadow: 0 0 0 rgba(255, 79, 216, 0);
+  }
+}
+
+/* ===== Grid ===== */
+
+.work2-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 26px;
+}
+
+/* ===== Card ===== */
+
+.work2-card {
+  text-decoration: none;
+  color: inherit;
+  border-radius: 10px;
+  overflow: hidden;
+
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+
+  display: flex;
+  flex-direction: column;
+  min-height: 380px;
+
+  transition: transform 200ms ease, border-color 200ms ease, background 200ms ease;
+}
+
+.work2-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* ===== Thumb (gradient + showcase) ===== */
+
+.work2-thumb {
+  position: relative;
+  overflow: hidden;
+}
+
+.work2-thumb--showcase {
+  aspect-ratio: 16 / 10;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+  background: radial-gradient(
+      700px 360px at 20% 15%,
+      rgba(255, 255, 255, 0.18),
+      transparent 55%
+    ),
+    linear-gradient(135deg, var(--g1), var(--g2) 60%, var(--g3));
+
+  perspective: 1200px;
+}
+
+/* present in JSX, but intentionally hidden (minimal look) */
+.work2-thumbGlow,
+.work2-thumbNoise {
+  display: none;
+}
+
+/* top text appears on hover */
+.work2-thumbTopText {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  z-index: 3;
+
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.15;
+  color: rgba(255, 255, 255, 0.86);
+
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.work2-thumbTopText span:first-child {
+  max-width: 82%;
+}
+
+.work2-card:hover .work2-thumbTopText {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.work2-arrow {
+  font-size: 30px;
+  opacity: 1;
+  transform: translateX(-2px);
+  transition: transform 180ms ease;
+}
+
+.work2-card:hover .work2-arrow {
+  transform: translateX(2px);
+}
+
+/* ===== Mockups ===== */
+
+.work2-showcase {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+}
+
+.work2-mockup {
+  width: 96%;
+  height: auto;
+  border-radius: 18px;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.18);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.45);
+
+  transform-origin: center;
+  filter: saturate(1.02) contrast(1.02);
+  transition: transform 200ms ease, box-shadow 200ms ease, filter 200ms ease;
+}
+
+/* slanted */
+.work2-mockup--0 {
+  transform: translateY(22px) rotateX(2deg) rotateY(-4deg) rotateZ(-1.5deg);
+}
+
+.work2-mockup--1 {
+  position: absolute;
+  width: 86%;
+  opacity: 1;
+  transform: translate(-18px, 38px) rotateX(2deg) rotateY(6deg) rotateZ(2deg);
+  filter: blur(0.6px);
+}
+
+.work2-card:hover .work2-mockup--0 {
+  transform: translateY(14px) rotateX(0deg) rotateY(-2deg) rotateZ(-0.5deg);
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.55);
+}
+
+.work2-card:hover .work2-mockup--1 {
+  transform: translate(-22px, 34px) rotateX(0deg) rotateY(4deg) rotateZ(1deg);
+  opacity: 0.7;
+  transition: 0.2s ease-in-out;
+}
+
+/* ===== Meta ===== */
+
+.work2-meta {
+  padding: 16px 16px 18px;
+}
+
+.work2-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.work2-cardTitle {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.work2-year {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  opacity: 0.7;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* ===== Tags (tech stack) ===== */
+
+.work2-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.work2-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 7px;
+  position: relative;
+  overflow: hidden;
+
+  background:
+    radial-gradient(140px 60px at 18% 18%, rgba(255, 255, 255, 0.1), transparent 60%),
+    rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  color: rgba(255, 255, 255, 0.78);
+
+  /* inner "spotlight" glow */
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.048),
+    inset 0 -10px 24px rgba(255, 255, 255, 0.04),
+    inset 0 10px 18px rgba(0, 0, 0, 0.2);
+}
+
+.work2-tagIcon {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.35));
+  opacity: 0.95;
+}
+
+.work2-tagText {
+  line-height: 1;
+}
+
+/* ===== Card CTAs (GitHub / Visit) ===== */
+
+.work2-actions {
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.work2-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  height: 36px;
+
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  user-select: none;
+
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease,
+    color 160ms ease;
+}
+
+.work2-action-github {
+  border-radius: 50%;
+  padding: 5px 9px;
+}
+.work2-action-live {
+  border-radius: 10px;
+  padding: 0 13px;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+}
+
+.work2-action--ghost {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.work2-action--solid {
+  border-radius: 999px;
+  background: white;
+  color: black;
+}
+
+.work2-action:hover {
+  transform: translateY(-2px);
+}
+
+.work2-action--ghost:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+
+.work2-actionArrow {
+  font-size: 20px;
+  opacity: 1;
+}
+
+/* ===== Bottom CTA (See more projects) ===== */
+
+.work2-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 34px;
+}
+
+.work2-more {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+
+  padding: 10px 14px;
+  border-radius: 999px;
+
+  transition: transform 180ms ease, opacity 180ms ease;
+}
+
+.work2-more:hover {
+  transform: translateY(-2px);
+}
+
+.work2-moreText {
+  opacity: 0.9;
+}
+
+.work2-moreCircle {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.03);
+
+  transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+}
+
+.work2-more:hover .work2-moreCircle {
+  transform: translateX(3px);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.26);
+}
+
+/* ===== Responsive ===== */
+
+@media (max-width: 980px) {
+  .work2-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .work2-title {
+    font-size: 3.2rem;
+  }
+}
+
+@media (max-width: 620px) {
+  .work2-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .work2-title {
+    font-size: 2.6rem;
+  }
+}
